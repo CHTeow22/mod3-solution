@@ -11,7 +11,7 @@
     var ddo = {
       templateUrl: 'foundItems.html',
       scope: {
-        found: '<',
+        foundItems: '<',
         onRemove: '&'
       },
       controller: FoundItemsDirectiveController,
@@ -68,7 +68,7 @@
       // console.log(narrowIt.found);
     }
 
-    narrowIt.onRemove = function(itemIndex) {
+    narrowIt.removeItem = function(itemIndex) {
       MenuSearchService.removeItem(itemIndex);
     }
   }
