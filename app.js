@@ -27,8 +27,8 @@
     var list = this;
 
     list.errorMessage = function() {
-      var foundList = list.foundMenu.length;
-      if (foundList == 0) {
+      var foundList = list.foundMenu;
+      if (foundList.length == 0) {
         // console.log("false");
         return true;
       }
@@ -76,23 +76,31 @@
     service.getMatchedMenuItems = function(searchItem) {
       // matchFound = [];
       searchItem = searchItem.toLowerCase();
-      var promise = service.getAllMenuItems();
+      if (searchItem == "") {
+          matchFound = [];
+      } else {
+        var promise = service.getAllMenuItems();
 
-      promise.then(function (matchedItem) {
-        var listMenu = matchedItem.data.menu_items;
+        promise.then(function (matchedItem) {
+          var listMenu = matchedItem.data.menu_items;
 
-        //  if string not found, will return -1
-        for (var i = 0; i < listMenu.length; i++) {
-          var menuSearch = listMenu[i].description;
-          if (menuSearch.toLowerCase().indexOf(searchItem) !== -1) {
-            matchFound.push(listMenu[i]);
+          //  if string not found, will return -1
+          for (var i = 0; i < listMenu.length; i++) {
+            var menuSearch = listMenu[i].description;
+
+            if (menuSearch.toLowerCase().indexOf(searchItem) !== -1) {
+              matchFound.push(listMenu[i]);
+            }
           }
-        }
-      })
-      .catch(function(error) {
-        // narrowIt.errorMessage = true;
-        console.log("error");
-      });
+
+        })
+        .catch(function(error) {
+          // narrowIt.errorMessage = true;
+          console.log("error");
+        });
+      }
+
+
     };
 
     service.removeItem = function (itemIndex) {
