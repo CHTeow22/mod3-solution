@@ -77,22 +77,29 @@
       // matchFound = [];
       searchItem = searchItem.toLowerCase();
       if (searchItem == "") {
-          matchFound = [];
+          // matchFound = [];
       } else {
         var promise = service.getAllMenuItems();
 
         promise.then(function (matchedItem) {
+          var searchArray = [];
           var listMenu = matchedItem.data.menu_items;
 
           //  if string not found, will return -1
           for (var i = 0; i < listMenu.length; i++) {
+            if (i == 0) {
+              console.log(i);
+              searchArray = [];
+            }
             var menuSearch = listMenu[i].description;
 
             if (menuSearch.toLowerCase().indexOf(searchItem) !== -1) {
-              matchFound.push(listMenu[i]);
+              searchArray.push(listMenu[i]);
             }
           }
 
+          matchFound = searchArray;
+          console.log(matchFound);
         })
         .catch(function(error) {
           // narrowIt.errorMessage = true;
